@@ -15,7 +15,8 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#~0.5.5"
+    "polymer": "Polymer/polymer#~0.5.5",
+    "wheel-select": "git@github.com:maklesoft/wheel-select.git#~0.1.0"
   },
   "devDependencies": {
     "core-component-page": "Polymer/core-component-page#~0.5.5"
