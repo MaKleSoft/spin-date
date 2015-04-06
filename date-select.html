@@ -1,0 +1,68 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../wheel-select/wheel-select.html">
+
+<polymer-element name="date-select" layout horizontal>
+
+<template>
+    <wheel-select options="{{ days }}" value="{{ day }}" flex></wheel-select>
+    <wheel-select options="{{ months }}" value="{{ month }}" flex two></wheel-select>
+    <wheel-select options="{{ years }}" value="{{ year }}" flex></wheel-select>
+</template>
+
+<script>
+(function() {
+    'use strict';
+
+    Polymer({
+
+        months: [
+            { label: 'January', value: 0 },
+            { label: 'February', value: 1 },
+            { label: 'March', value: 2 },
+            { label: 'April', value: 3 },
+            { label: 'May', value: 4 },
+            { label: 'June', value: 5 },
+            { label: 'Juli', value: 6 },
+            { label: 'August', value: 7 },
+            { label: 'September', value: 8 },
+            { label: 'October', value: 9 },
+            { label: 'November', value: 10 },
+            { label: 'Dezember', value: 11 },
+        ],
+
+        publish: {
+            day: 1,
+            month: 0,
+            year: 0
+        },
+
+        computed: {
+            days: 'daysInMonth(month, year)'
+        },
+
+        created: function() {
+            var currYear = new Date().getFullYear();
+            var years = [];
+
+            for (var y = currYear; y < currYear + 20; y++) {
+                years.push(y);
+            }
+
+            this.years = years;
+            this.year = currYear;
+        },
+
+        daysInMonth: function(month, year) {
+            var lastDay = new Date(year, month + 1, -1).getDate();
+            var days = [];
+            for (var d = 1; d <= lastDay; d++) {
+                days.push(d);
+            }
+            return days;
+        }
+
+    });
+})();
+</script>
+
+</polymer-element>
