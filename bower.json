@@ -1,6 +1,6 @@
 {
   "name": "date-select",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "authors": [
     "Martin Kleinschrodt <martin@maklesoft.com>"
   ],
@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#~0.5.5",
-    "wheel-select": "git@github.com:maklesoft/wheel-select.git#~0.1.0"
+    "wheel-select": "git@github.com:maklesoft/wheel-select.git#~0.1.1"
   },
   "devDependencies": {
     "core-component-page": "Polymer/core-component-page#~0.5.5"
