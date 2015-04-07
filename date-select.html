@@ -70,7 +70,7 @@
         ],
 
         publish: {
-            day: 1,
+            day: 0,
             month: 0,
             year: 0
         },
@@ -80,7 +80,8 @@
         },
 
         created: function() {
-            var currYear = new Date().getFullYear();
+            var currDate = new Date();
+            var currYear = currDate.getFullYear();
             var years = [];
 
             for (var y = currYear; y < currYear + 20; y++) {
@@ -88,7 +89,9 @@
             }
 
             this.years = years;
-            this.year = currYear;
+            this.year = this.year || currYear;
+            this.month = this.month || currDate.getMonth();
+            this.day = this.day || currDate.getDate();
         },
 
         daysInMonth: function(month, year) {
