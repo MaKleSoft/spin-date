@@ -1,12 +1,54 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../wheel-select/wheel-select.html">
 
-<polymer-element name="date-select" layout horizontal>
+<polymer-element name="date-select" layout horizontal center-justified>
 
 <template>
-    <wheel-select options="{{ days }}" value="{{ day }}" flex></wheel-select>
-    <wheel-select options="{{ months }}" value="{{ month }}" flex two></wheel-select>
-    <wheel-select options="{{ years }}" value="{{ year }}" flex></wheel-select>
+    <style>
+
+        :host {
+            display: block;
+            /* -webkit-perspective: 1000px; */
+            perspective: 1000px;
+            text-align: center;
+            min-width: 235px;
+        }
+
+        wheel-select {
+            /* -webkit-perspective: 0 !important; */
+            perspective: 0 !important;
+        }
+
+        wheel-select::shadow .option {
+            padding: 0 10px;
+        }
+
+        .days::shadow .option {
+            text-align: right;
+        }
+
+        .months::shadow .option, .years::shadow .option {
+            text-align: left;
+        }
+
+        .days {
+            width: 60px;
+        }
+
+        .months {
+            min-width: 100px;
+            max-width: 150px;
+        }
+
+        .years {
+            width: 75px;
+        }
+    </style>
+
+    <wheel-select options="{{ days }}" value="{{ day }}" class="days"></wheel-select>
+    <wheel-select options="{{ months }}" value="{{ month }}" class="months" flex></wheel-select>
+    <wheel-select options="{{ years }}" value="{{ year }}" class="years"></wheel-select>
+
 </template>
 
 <script>
