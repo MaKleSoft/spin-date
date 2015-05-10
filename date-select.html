@@ -10,6 +10,7 @@ Example usage:
 -->
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../wheel-select/wheel-select.html">
+<script src="../moment/moment.js"></script>
 
 <polymer-element name="date-select">
 
@@ -59,37 +60,24 @@ Example usage:
     </div>
 
     <div hidden?="{{ !cont }}">
-        <wheel-select options="{{ dateOptions }}" id="contSelect"
+        <wheel-select options="{{ dates }}" id="contSelect"
             on-select="{{ dateSelected }}"></wheel-select>
     </div>
 
 </template>
 
 <script>
-(function() {
+(function(Polymer, moment) {
     'use strict';
-
-    function daysInMonth(year, month) {
-        return new Date(year, month + 1, 0).getDate();
-    }
 
     Polymer({
 
-        // TODO: Find a way to provide localized month names
-        months: [
-            { label: 'January', value: 0 },
-            { label: 'February', value: 1 },
-            { label: 'March', value: 2 },
-            { label: 'April', value: 3 },
-            { label: 'May', value: 4 },
-            { label: 'June', value: 5 },
-            { label: 'July', value: 6 },
-            { label: 'August', value: 7 },
-            { label: 'September', value: 8 },
-            { label: 'October', value: 9 },
-            { label: 'November', value: 10 },
-            { label: 'December', value: 11 },
-        ],
+        months: moment.months().map(function(month, i) {
+            return {
+                value: i,
+                label: month
+            };
+        }),
 
         publish: {
             /**
@@ -112,7 +100,8 @@ Example usage:
             cont: {
                 value: false,
                 reflect: true
-            }
+            },
+            dateFormat: 'LL'
         },
 
         years: function(i) {
@@ -121,6 +110,7 @@ Example usage:
         },
 
         created: function() {
+            this.dates = this.dateOptions.bind(this);
             var currDate = new Date();
             var currYear = currDate.getFullYear();
             this.year = this.year || currYear;
@@ -130,7 +120,7 @@ Example usage:
         },
 
         updateDays: function() {
-            var nDays = daysInMonth(this.year, this.month);
+            var nDays = moment().year(this.year).month(this.month).daysInMonth();
             var days = [];
             for (var d = 1; d <= nDays; d++) {
                 days.push(d);
@@ -152,7 +142,7 @@ Example usage:
             date.setDate(date.getDate() + i);
             return {
                 value: date,
-                label: date.toLocaleDateString()
+                label: moment(date).format(this.dateFormat)
             };
         },
 
