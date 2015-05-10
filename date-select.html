@@ -11,7 +11,7 @@ Example usage:
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../wheel-select/wheel-select.html">
 
-<polymer-element name="date-select" layout horizontal center-justified>
+<polymer-element name="date-select">
 
 <template>
     <style>
@@ -52,15 +52,26 @@ Example usage:
         }
     </style>
 
-    <wheel-select options="{{ days }}" value="{{ day }}" class="days"></wheel-select>
-    <wheel-select options="{{ months }}" value="{{ month }}" class="months" flex></wheel-select>
-    <wheel-select options="{{ years }}" value="{{ year }}" class="years"></wheel-select>
+    <div hidden?="{{ cont }}" layout horizontal center-justified>
+        <wheel-select options="{{ days }}" value="{{ day }}" class="days" repeat></wheel-select>
+        <wheel-select options="{{ months }}" value="{{ month }}" class="months" repeat flex></wheel-select>
+        <wheel-select id="yearSelect" options="{{ years }}" value="{{ year }}" class="years"></wheel-select>
+    </div>
+
+    <div hidden?="{{ !cont }}">
+        <wheel-select options="{{ dateOptions }}" id="contSelect"
+            on-select="{{ dateSelected }}"></wheel-select>
+    </div>
 
 </template>
 
 <script>
 (function() {
     'use strict';
+
+    function daysInMonth(year, month) {
+        return new Date(year, month + 1, 0).getDate();
+    }
 
     Polymer({
 
@@ -97,36 +108,35 @@ Example usage:
              * @attribute year
              * The selected year. If not specified, defaults to the current year.
              */
-            year: 0
+            year: 0,
+            cont: {
+                value: false,
+                reflect: true
+            }
         },
 
-        computed: {
-            days: 'daysInMonth(month, year)'
+        years: function(i) {
+            var currYear = new Date().getFullYear();
+            return currYear + i;
         },
 
         created: function() {
             var currDate = new Date();
             var currYear = currDate.getFullYear();
-            var years = [];
-
-            for (var y = currYear; y < currYear + 20; y++) {
-                years.push(y);
-            }
-
-            this.years = years;
             this.year = this.year || currYear;
             this.month = this.month || currDate.getMonth();
             this.day = this.day || currDate.getDate();
+            this.updateDays();
         },
 
-        // Generates an array with available days for a given month and year
-        daysInMonth: function(month, year) {
-            var lastDay = new Date(year, month + 1, -1).getDate();
+        updateDays: function() {
+            var nDays = daysInMonth(this.year, this.month);
             var days = [];
-            for (var d = 1; d <= lastDay; d++) {
+            for (var d = 1; d <= nDays; d++) {
                 days.push(d);
             }
-            return days;
+            this.day = Math.max(1, Math.min(nDays, this.day));
+            this.days = days;
         },
 
         /**
@@ -135,10 +145,54 @@ Example usage:
          */
         getDate: function() {
             return new Date(this.year, this.month, this.day);
+        },
+
+        dateOptions: function(i) {
+            var date = new Date();
+            date.setDate(date.getDate() + i);
+            return {
+                value: date,
+                label: date.toLocaleDateString()
+            };
+        },
+
+        dateSelected: function(e, opt) {
+            var d = opt.value;
+            this.year = d.getFullYear();
+            this.month = d.getMonth();
+            this.day = d.getDate();
+        },
+
+        updateContSelect: function() {
+            var currDate = new Date();
+            var selectedDate = this.getDate();
+            var diff = selectedDate.getTime() - currDate.getTime();
+            var i = Math.ceil(diff / 24 / 60 / 60 / 1000);
+            this.$.contSelect.selectedIndex = i;
+        },
+
+        updateYearSelect: function() {
+            var currYear = new Date().getFullYear();
+            this.$.yearSelect.selectedIndex = this.year - currYear;
+        },
+
+        yearChanged: function() {
+            this.updateYearSelect();
+            this.updateDays();
+            this.updateContSelect();
+        },
+
+        monthChanged: function() {
+            this.updateDays();
+            this.updateContSelect();
+        },
+
+        dayChanged: function() {
+            this.updateContSelect();
         }
 
     });
-})();
+})(Polymer, moment);
 </script>
 
 </polymer-element>
