@@ -1,3 +1,3 @@
-# date-select
+# spin-date
 
-See the [component page](http://maklesoft.github.io/date-select/) for more information.
+See the [component page](http://maklesoft.github.io/spin-date/) for more information.

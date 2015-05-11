@@ -1,15 +1,15 @@
 <!--
-@element date-select
+@element spin-date
 
-`<date-select>` is a date selector widget inspired inspired by the date picker in iOS
+`<spin-date>` is a date selector widget inspired inspired by the date picker in iOS
 
 ### Example usage:
 
-    <date-select year="{{ year }}" month="{{ month }} year="{{ year }}"></date-select>
+    <spin-date year="{{ year }}" month="{{ month }} year="{{ year }}"></spin-date>
 
 ### Localization
 
-`<date-select>` uses [moment.js](http://momentjs.com/) for formatting dates and retrieving month names.
+`<spin-date>` uses [moment.js](http://momentjs.com/) for formatting dates and retrieving month names.
 For documentation on how to do localization with moment.js, check out
 [this link](http://momentjs.com/docs/#/i18n/)
 
@@ -18,7 +18,7 @@ For documentation on how to do localization with moment.js, check out
 <link rel="import" href="../spin-select/spin-select.html">
 <script src="../moment/moment.js"></script>
 
-<polymer-element name="date-select">
+<polymer-element name="spin-date">
 
 <template>
     <style>

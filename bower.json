@@ -1,10 +1,10 @@
 {
-  "name": "date-select",
-  "version": "0.1.1",
+  "name": "spin-date",
+  "version": "0.2.0",
   "authors": [
     "Martin Kleinschrodt <martin@maklesoft.com>"
   ],
-  "main": "date-select.html",
+  "main": "spin-date.html",
   "license": "MIT",
   "private": true,
   "ignore": [

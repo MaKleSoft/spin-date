@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>date-select demo</title>
+        <title>spin-date demo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"/>
 
         <script src="../webcomponentsjs/webcomponents.min.js"></script>
 
         <link rel="import" href="../polymer/polymer.html">
-        <link rel="import" href="date-select.html">
+        <link rel="import" href="spin-date.html">
 
     </head>
     <body>
 
-        <polymer-element name="date-select-demo" layout vertical noscript>
+        <polymer-element name="spin-date-demo" layout vertical noscript>
             <template>
 
                 <style>
@@ -32,7 +32,7 @@
                     }
                 </style>
 
-                <date-select year="{{ year }}" month="{{ month }}" day="{{ day }}" cont="{{ cont }}"></date-select>
+                <spin-date year="{{ year }}" month="{{ month }}" day="{{ day }}" cont="{{ cont }}"></spin-date>
 
                 <hr>
 
@@ -49,7 +49,7 @@
             </template>
         </polymer-element>
 
-        <date-select-demo fit></date-select-demo>
+        <spin-date-demo fit></spin-date-demo>
 
     </body>
 </html>
