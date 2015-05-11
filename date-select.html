@@ -15,7 +15,7 @@ For documentation on how to do localization with moment.js, check out
 
 -->
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../wheel-select/wheel-select.html">
+<link rel="import" href="../spin-select/spin-select.html">
 <script src="../moment/moment.js"></script>
 
 <polymer-element name="date-select">
@@ -29,11 +29,11 @@ For documentation on how to do localization with moment.js, check out
             min-width: 235px;
         }
 
-        wheel-select {
+        spin-select {
             perspective: 0;
         }
 
-        wheel-select::shadow .option {
+        spin-select::shadow .option {
             padding: 0 10px;
         }
 
@@ -60,14 +60,14 @@ For documentation on how to do localization with moment.js, check out
     </style>
 
     <div hidden?="{{ cont }}" layout horizontal center-justified>
-        <wheel-select options="{{ days }}" value="{{ day }}" class="days" repeat></wheel-select>
-        <wheel-select options="{{ months }}" value="{{ month }}" class="months" repeat flex></wheel-select>
-        <wheel-select id="yearSelect" options="{{ years }}" value="{{ year }}" class="years"></wheel-select>
+        <spin-select options="{{ days }}" value="{{ day }}" class="days" repeat></spin-select>
+        <spin-select options="{{ months }}" value="{{ month }}" class="months" repeat flex></spin-select>
+        <spin-select id="yearSelect" options="{{ years }}" value="{{ year }}" class="years"></spin-select>
     </div>
 
     <div hidden?="{{ !cont }}">
-        <wheel-select options="{{ dates }}" id="contSelect"
-            on-select="{{ dateSelected }}"></wheel-select>
+        <spin-select options="{{ dates }}" id="contSelect"
+            on-select="{{ dateSelected }}"></spin-select>
     </div>
 
 </template>

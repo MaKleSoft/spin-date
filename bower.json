@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#~0.5.5",
-    "wheel-select": "git@github.com:maklesoft/wheel-select.git#~0.2.0",
+    "spin-select": "git@github.com:maklesoft/spin-select.git#~0.2.1",
     "moment": "~2.10.2"
   },
   "devDependencies": {
