@@ -3,9 +3,15 @@
 
 `<date-select>` is a date selector widget inspired inspired by the date picker in iOS
 
-Example usage:
+### Example usage:
 
     <date-select year="{{ year }}" month="{{ month }} year="{{ year }}"></date-select>
+
+### Localization
+
+`<date-select>` uses [moment.js](http://momentjs.com/) for formatting dates and retrieving month names.
+For documentation on how to do localization with moment.js, check out
+[this link](http://momentjs.com/docs/#/i18n/)
 
 -->
 <link rel="import" href="../polymer/polymer.html">
@@ -72,6 +78,7 @@ Example usage:
 
     Polymer({
 
+        // Localized month names are taken from the `moment.js` library
         months: moment.months().map(function(month, i) {
             return {
                 value: i,
@@ -97,13 +104,27 @@ Example usage:
              * The selected year. If not specified, defaults to the current year.
              */
             year: 0,
+            /**
+             * @attribute cont
+             * @default false
+             * If set to true, will show a single, continuous wheel instead of three separate wheels for
+             * year, month and day
+             */
             cont: {
                 value: false,
                 reflect: true
             },
+            /**
+             * @attribute dateFormat
+             * @default 'LL'
+             * Formatting to be used for displaying dates in 'continuous mode'. Dates are formatted through
+             * the [moment.js](http://momentjs.com/) library. For documentation on formatting options, refer
+             * to http://momentjs.com/docs/#/displaying/format/
+             */
             dateFormat: 'LL'
         },
 
+        // Generates options for the year select
         years: function(i) {
             var currYear = new Date().getFullYear();
             return currYear + i;
@@ -119,6 +140,7 @@ Example usage:
             this.updateDays();
         },
 
+        // Updates the day options based on month and year
         updateDays: function() {
             var nDays = moment().year(this.year).month(this.month).daysInMonth();
             var days = [];
@@ -137,6 +159,7 @@ Example usage:
             return new Date(this.year, this.month, this.day);
         },
 
+        // Generates options for the continuous date select
         dateOptions: function(i) {
             var date = new Date();
             date.setDate(date.getDate() + i);
@@ -146,6 +169,8 @@ Example usage:
             };
         },
 
+        // Handler for when a date was selected from the continuous date select. Updates the `year`,
+        // `month` and `day` properties
         dateSelected: function(e, opt) {
             var d = opt.value;
             this.year = d.getFullYear();
@@ -153,7 +178,10 @@ Example usage:
             this.day = d.getDate();
         },
 
+        // Updates the scroll index of the contiuous date select based on the `year`, `month` and `day`
+        // properties
         updateContSelect: function() {
+            // The scroll index is the offset from the current date in days
             var currDate = new Date();
             var selectedDate = this.getDate();
             var diff = selectedDate.getTime() - currDate.getTime();
@@ -161,6 +189,7 @@ Example usage:
             this.$.contSelect.selectedIndex = i;
         },
 
+        // Updates the scroll index of the year select, based on the `year` property
         updateYearSelect: function() {
             var currYear = new Date().getFullYear();
             this.$.yearSelect.selectedIndex = this.year - currYear;
