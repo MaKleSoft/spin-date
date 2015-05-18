@@ -26,14 +26,18 @@ For documentation on how to do localization with moment.js, check out
             display: block;
             perspective: 1000px;
             text-align: center;
-            min-width: 235px;
+            min-width: 195px;
+        }
+
+        :host([cont]) {
+            min-width: 160px;
         }
 
         spin-select {
-            perspective: 0;
+            perspective: none;
         }
 
-        spin-select::shadow .option {
+        :host(:not([cont])) spin-select::shadow .option {
             padding: 0 10px;
         }
 
@@ -46,7 +50,7 @@ For documentation on how to do localization with moment.js, check out
         }
 
         .days {
-            width: 60px;
+            width: 40px;
         }
 
         .months {
@@ -55,7 +59,7 @@ For documentation on how to do localization with moment.js, check out
         }
 
         .years {
-            width: 75px;
+            width: 55px;
         }
     </style>
 
@@ -76,6 +80,10 @@ For documentation on how to do localization with moment.js, check out
 (function(Polymer, moment) {
     'use strict';
 
+    function isDef(val) {
+        return typeof val !== 'undefined' && val !== null;
+    }
+
     Polymer({
 
         // Localized month names are taken from the `moment.js` library
@@ -91,19 +99,19 @@ For documentation on how to do localization with moment.js, check out
              * @attribute day
              * The selected day. If not specified, defaults to the current day.
              */
-            day: 0,
+            day: undefined,
             /**
              * @attribute month
              * The selected month. If not specified, defaults to the current month.
              * NOTE: This value is 0-based to be consistent with the native `Date` object.
              * I.e. `0` corresponds to January, `1` corresponds to February and so on.
              */
-            month: 0,
+            month: undefined,
             /**
              * @attribute year
              * The selected year. If not specified, defaults to the current year.
              */
-            year: 0,
+            year: undefined,
             /**
              * @attribute cont
              * @default false
@@ -134,9 +142,9 @@ For documentation on how to do localization with moment.js, check out
             this.dates = this.dateOptions.bind(this);
             var currDate = new Date();
             var currYear = currDate.getFullYear();
-            this.year = this.year || currYear;
-            this.month = this.month || currDate.getMonth();
-            this.day = this.day || currDate.getDate();
+            this.year = isDef(this.year) ? this.year : currYear;
+            this.month = isDef(this.month) ? this.month : currDate.getMonth();
+            this.day = isDef(this.day) ? this.day : currDate.getDate();
             this.updateDays();
         },
 
